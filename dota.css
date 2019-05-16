@@ -1,0 +1,40 @@
+.navbar-nav {
+  width: 100%;
+}
+
+.nav-link {
+    font-size: 16pt;
+}
+
+.btn-outline-danger {
+    color: #f9717e;
+}
+
+.lead {
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+.grayed {
+    opacity: 0.3;
+}
+
+body {
+    background-color: #120000;
+    color: #ffeded;
+}
+
+img {
+    width: 33.33%;
+}
+
+header {
+    padding-top: 24px;
+    text-align: center;
+}
+
+header img {
+    height: 5em;
+    width: 5em;
+    display: inline;
+}
