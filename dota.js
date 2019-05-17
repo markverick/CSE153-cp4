@@ -10,11 +10,6 @@
 (function() {
     "use strict";
     
-    let pid = null;
-    let guid = null;
-    let myPokemon = null;
-    let maxHp = null;
-    
     window.addEventListener("load", init);
 
     /**
@@ -25,6 +20,53 @@
         fetchHeroes("agi");
         fetchHeroes("int");
         fetchHeroes("str");
+        let navs = qsa("nav button");
+        for (let i = 0; i < navs.length; i++) {
+            navs[i].addEventListener("click", toggleRole);
+        }
+    }
+    
+    function toggleRole() {
+        this.classList.toggle("btn-outline-danger");
+        this.classList.toggle("btn-danger");
+        let navs = qsa("nav button");
+        let query = "dota.php?roles=";
+        for (let i = 0; i < navs.length; i++) {
+            if (navs[i].classList.contains("btn-danger")) {
+                query += navs[i].id + "|";
+            }
+        }
+        
+        fetch(query.substring(0, query.length - 1))
+            .then(checkStatus)
+            .then(JSON.parse)
+            .then(refreshRole)
+            .catch(console.log);
+    }
+    
+    function refreshRole(json) {
+        let heroes = qsa("main img");
+        if (json.length) {
+            for (let i = 0; i < heroes.length; i++) {
+                $(heroes[i]).animate({
+                    opacity: '0.3',
+                });
+                // heroes[i].classList.add("grayed");
+            }
+            for (let i = 0; i < json.length; i++) {
+                $("#" + json[i]).animate({
+                    opacity: '1',
+                });
+                // id(json[i]).classList.remove("grayed");
+            }
+        } else {
+            for (let i = 0; i < heroes.length; i++) {
+                $(heroes[i]).animate({
+                    opacity: '1',
+                });
+                // heroes[i].classList.remove("grayed");
+            }
+        }
     }
     
     /**
