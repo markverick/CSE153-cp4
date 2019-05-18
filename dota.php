@@ -8,10 +8,13 @@
     if (isset($_GET["type"])) {
         $type = $_GET["type"];
         list_heroes($type);
-    }
-    if (isset($_GET["roles"])) {
+    } else if (isset($_GET["roles"])) {
         $roles = $_GET["roles"];
         filter_heroes($roles);
+    } else {
+        header("HTTP/1.1 400 Invalid Request");
+        header("Content-type: text/plain");
+        echo "API not supported for this query";
     }
     
     /**
@@ -28,9 +31,13 @@
                 $output[] = $hero["name"] . ":" . $hero["localized_name"];
             }
         }
+        if (!$output) {
+            header("HTTP/1.1 400 Invalid Request");
+            echo "No heroes found, there are only three valid types: \"str\", \"agi\", \"int\"";
+        }
         sort($output);
         foreach ($output as $hero) {
-           echo substr($hero, 14) . "\n";
+            echo substr($hero, 14) . "\n";
         }
         
     }

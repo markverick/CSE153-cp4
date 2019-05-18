@@ -57,10 +57,10 @@
         let heroes = qsa("main img");
         let grid = Array();
         for (let i = 0; i < heroes.length; i++) {
-            grid[heroes[i].id] = true;
+            grid[heroes[i].id] = json.length? false: true;
         }
         for (let i = 0; i < json.length; i++) {
-            grid[json[i]] = false;
+            grid[json[i]] = true;
         }
         for (let hero in grid) {
             if (grid[hero]) {

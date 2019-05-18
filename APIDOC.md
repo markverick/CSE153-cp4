@@ -1,47 +1,66 @@
-# *FILL IN NAME* API Documentation
-*Fill in a short description here about the API's purpose.*
+# Dota Hero Showcase API Documentation
+The API provides information about the hero information based on the game Dota.
 
-## *Fill in Endpoint 1 Title*
-**Request Format:** *Fill in example request format*
+## Get the list of hero names by a specified hero type.
+**Request Format:** dota.php?type={type}
 
 **Request Type:** GET
 
-**Returned Data Format**: JSON
+**Returned Data Format**: Plain Text
 
-**Description:** *Fill in description*
+**Description:** Return a list of specified hero type in a format of {Name}:{Localized Name}
+The valid types are `str`, `agi`, `int`.s
 
-
-**Example Request:** *Fill in example request*
+**Example Request:** dota.php?type=agi
 
 **Example Response:**
 *Fill in example response in the {}*
-
-```json
-{
-
-}
+```s
+antimage:Anti-Mage
+arc_warden:Arc Warden
+bloodseeker:Bloodseeker
+bounty_hunter:Bounty Hunter
+broodmother:Broodmother
+clinkz:Clinkz
+...
 ```
 
 **Error Handling:**
-*Fill in any error handling*
+ - if the `type` are not either `str`, `agi`, or `int`, then it will return 400 error with a message: `No heroes found, there are only three valid types: \"str\", \"agi\", \"int\"`.
 
-## *Fill in Endpoint 2 Title*
-**Request Format:** *Fill in example request format*
+## Filter heroes by roles
+**Request Format:** dota.php?roles={role1}|{role2}|...|{rolen}
 
-**Request Type**: POST
+**Request Type**: GET
 
-**Returned Data Format**: Plain Text
+**Returned Data Format**: JSON
 
-**Description:** *Fill in description*
+**Description:** Return a list of heroes that shares all of the attributes provided by the request.
 
-**Example Request:** *Fill in example request*
+**Example Request:** dota.php?roles=carry|disabler|escape
 
 **Example Response:**
-*Fill in example response in the ticks*
 
-```
-
+```json
+[
+  "mirana",
+  "morphling",
+  "storm_spirit",
+  "windrunner",
+  "slardar",
+  "riki",
+  "faceless_void",
+  "life_stealer",
+  "spirit_breaker",
+  "invoker",
+  "meepo",
+  "naga_siren",
+  "slark",
+  "ember_spirit",
+  "monkey_king",
+  "pangolier"
+]
 ```
 
 **Error Handling:**
-*Fill in any error handling*
+ - If the request filters out all heroes or the role doesn't exist in any heroes, it will return a black JSON that is useful to unfilter all in Javascript
