@@ -1,4 +1,10 @@
 <?php
+/*
+    Name: Mark Theeranantachai
+    Date: May 18, 2019
+    Section: CSE 154 AF
+    A PHP APIs for index.html, assignment for CP4.
+*/
     if (isset($_GET["type"])) {
         $type = $_GET["type"];
         list_heroes($type);
@@ -8,12 +14,17 @@
         filter_heroes($roles);
     }
     
+    /**
+     * List hero by type and respod as plain text.
+     * @param {String} $type - a primary attribute of a hero
+     */
     function list_heroes($type) {
+        header("Content-type: text/plain");
         $json = file_get_contents("heroes.json");
         $heroes = json_decode($json, true);
         $output = array();
         foreach ($heroes as $hero) {
-            if ($hero["primary_attr"] == $type) {
+            if ($hero["primary_attr"] === $type) {
                 $output[] = $hero["name"] . ":" . $hero["localized_name"];
             }
         }
@@ -24,7 +35,12 @@
         
     }
     
+    /**
+     * Filter heroes and respond as JSON by hero roles
+     * @param {String} $filter - A string filter
+     */
     function filter_heroes($filter) {
+        header('Content-type: application/json');
         $roles = explode("|", $filter);
         $json = file_get_contents("heroes.json");
         $heroes = json_decode($json, true);
@@ -32,7 +48,7 @@
         foreach ($heroes as $hero) {
             $pass = TRUE;
             foreach ($roles as $role) {
-                if(!in_array($role, $hero["roles"])) {
+                if (!in_array($role, $hero["roles"])) {
                     $pass = FALSE;
                 }
             }
@@ -42,6 +58,4 @@
         }
         echo json_encode($output);
     }
-    
-
 ?>

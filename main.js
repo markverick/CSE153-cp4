@@ -1,10 +1,11 @@
+/* global $ */
 /*
     Name: Mark Theeranantachai
-    Date: May 8, 2019
+    Date: May 18, 2019
     Section: CSE 154 AF
-    A javascript for pokdex.html, assignment for HW3 - Complete.
-    A pokedex program game based on Pokemon that uses pokedex API to battle,
-    capture, and fill out the pokedex.
+    A javascript for index.html, assignment for CP4.
+    A showcase and role picker for selecting Dota Hero with animation and
+    tooltip. The data are fetched from dota.php.
 */
 
 (function() {
@@ -13,8 +14,8 @@
     window.addEventListener("load", init);
 
     /**
-     * Populate the main pokedex area by fetching pokemon data,
-     * add click event and functionality to start the game.
+     * Initialize the webpage by fetching three hero types in each row.
+     * Add click functionality of each hero role.
     */
     function init() {
         fetchHeroes("agi");
@@ -26,6 +27,10 @@
         }
     }
     
+    /**
+     * Toggle the role button, change its appearance, and refresh the board
+     * correspond to the role settings.
+     */
     function toggleRole() {
         this.classList.toggle("btn-outline-danger");
         this.classList.toggle("btn-danger");
@@ -41,53 +46,57 @@
             .then(checkStatus)
             .then(JSON.parse)
             .then(refreshRole)
-            .catch(console.log);
+            .catch((error) => displayError(error, "Cannot fetch heroes by roles"));
     }
     
+    /**
+     * Refresh the showcase based on resulting JSON role with jQuery animation.
+     * @param {Object} json - JSON object of a filtered hero list
+     */
     function refreshRole(json) {
         let heroes = qsa("main img");
-        if (json.length) {
-            for (let i = 0; i < heroes.length; i++) {
-                $(heroes[i]).animate({
+        let grid = Array();
+        for (let i = 0; i < heroes.length; i++) {
+            grid[heroes[i].id] = true;
+        }
+        for (let i = 0; i < json.length; i++) {
+            grid[json[i]] = false;
+        }
+        for (let hero in grid) {
+            if (grid[hero]) {
+                $("#" + hero).animate({
+                    opacity: '1',
+                });
+            }
+            else {
+                $("#" + hero).animate({
                     opacity: '0.3',
                 });
-                // heroes[i].classList.add("grayed");
-            }
-            for (let i = 0; i < json.length; i++) {
-                $("#" + json[i]).animate({
-                    opacity: '1',
-                });
-                // id(json[i]).classList.remove("grayed");
-            }
-        } else {
-            for (let i = 0; i < heroes.length; i++) {
-                $(heroes[i]).animate({
-                    opacity: '1',
-                });
-                // heroes[i].classList.remove("grayed");
             }
         }
     }
     
     /**
-     * Fetch pokemon data and populate the pokedex view
+     * Fetch heroes and populate the showcase by type\
+     * @param {String} type - A hero primary attribute.
      */
     function fetchHeroes(type) {
         const url = "dota.php?type=" + type;
         fetch(url)
             .then(checkStatus)
             .then((text) => populate(text, type))
-            .catch(console.log);
+            .catch((error) => displayError(error, "Cannot fetch hero lists"));
     }
     
     /**
-     * Populate the view by the fetch response,
-     * parse the plain text to get the data for updating the
-     * pokedex view, and set three starters as found.
-     * @param {String} text - A text response from Pokedex API
+     * Populate the showcase by the fetch response,
+     * parse the plain text to get the hero name and short name to
+     * fill the hero view.
+     * @param {String} text - A text response from Pokedex API, containing
+     * hero's name and short name
+     * @param {String} type - A hero primary attribute to fill it in its own column
      */
     function populate(text, type) {
-        let div = id("type");
         let lines = text.split("\n");
         for (let i = 0; i < lines.length - 1; i++) {
             let name = lines[i].split(":");
@@ -101,23 +110,19 @@
         }
     }
     
+    /**
+     * This function display error notification and its message in the
+     * topmost section of the page.
+     * @param {String} error - error text from http response
+     * @param {String} type - a generic error description
+	 */
+    function displayError(error, type) {
+        id("error").classList.remove("hidden");
+        qs("#error > h1").innerText = type;
+        qs("#error > h2").innerText = error;
+    }
+    
     /* ------------------------------ Helper Functions ------------------------------ */
-    
-    /**
-     * Hide an element by adding "hidden" class
-     * @param {Object} object - a DOM element we want to hide.
-    */
-    function hide(object) {
-        object.classList.add("hidden");
-    }
-    
-    /**
-     * Show an element by adding "hidden" class
-     * @param {Object} object - a DOM element we want to show.
-    */
-    function show(object) {
-        object.classList.remove("hidden");
-    }
     
     /**
     * Returns the element that has the ID attribute with the specified value.
@@ -132,11 +137,10 @@
     /**
     * Returns the first element that matches the given CSS selector.
     * @param {string} query - CSS query selector.
-    * @param {Object} [object=document] - DOM object to be selected.
     * @returns {object[]} array of DOM objects matching the query.
     */
-    function qs(query, object = document) {
-        return object.querySelector(query);
+    function qs(query) {
+        return document.querySelector(query);
     }
 
     /**
