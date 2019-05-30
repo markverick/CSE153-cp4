@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+  Name: Mark Theeranantachai
+  Date: May 18, 2019
+  Section: CSE 154 AF
+  This is my index page for creative project 4. It generates Dota heroes and fill
+  it in the columns by attributes, sorted hero names by alphabetical order.
+  The navigation bar functions as multiple role filters to gray out some heroes out.
+  Hover at the hero thumbnails to show it's localized name
+-->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Dota Heroes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-danger">
+      <div class="container">
+        <ul class="navbar-nav mr-auto justify-content-around">
+          <li class="nav-item">
+            <button class="btn btn-outline-danger my-2 my-sm-0" id="carry">Carry</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger my-2 my-sm-0" id="nuker">Nuker</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger my-2 my-sm-0" id="initiator">Initiator</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger my-2 my-sm-0" id="disabler">Disabler</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger my-2 my-sm-0" id="durable">Durable</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger my-2 my-sm-0" id="escape">Escape</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger my-2 my-sm-0" id="support">Support</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger my-2 my-sm-0" id="pusher">Pusher</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger my-2 my-sm-0" id="jungler">Jungler</button>
+          </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <div id="error" class="alert alert-danger hidden" role="alert">
+      <h1></h1>
+      <h2></h2>
+    </div>
+    <header class="container">
+      <img src="img/logo.png" alt="apple_news_logo">
+      <h1>Dota 2 Heroes Showcase</h1>
+    </header>
+    <main class="container">
+      <div class="row">
+        <div id="str" class="col col-4">
+          <p class="lead">Strength</p>
+        </div>
+        <div id="agi" class="col col-4">
+          <p class="lead">Agility</p>
+        </div>
+        <div id="int" class="co col-4">
+          <p class="lead">Intelligence</p>
+        </div>
+      </div>
+    </main>
+    <footer class="container">
+        <p>Images and Tradmarks belong to Valve Corporation and Apple Inc.</p>
+        <p>Dota database are from <a href="https://github.com/odota/dotaconstants"></a>https://github.com/odota/dotaconstants</p>
+        <p>&copy;API and websites are designed and implemented by Mark Theeranantachai</p>
+    </footer>
+  </body>
+</html>

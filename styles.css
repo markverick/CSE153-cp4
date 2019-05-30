@@ -1,0 +1,57 @@
+/*
+    Name: Mark Theeranantachai
+    Date:  May 18, 2019
+    Section: CSE 154 AF
+    CSS for index.html for CSE 154 CP4. 
+*/
+
+body {
+    background-color: #120000;
+    color: #ffeded;
+}
+
+img {
+    width: 33.33%;
+}
+
+header {
+    padding-top: 24px;
+    text-align: center;
+}
+
+footer {
+    font-size: 8pt;
+    padding-top: 16px;
+}
+
+header img {
+    height: 5em;
+    width: 5em;
+    display: inline;
+}
+
+footer p {
+    text-align: right;
+    margin-bottom: 3px;
+}
+
+.navbar-nav {
+  width: 100%;
+}
+
+.nav-link {
+    font-size: 16pt;
+}
+
+.btn-outline-danger {
+    color: #f9717e;
+}
+
+.lead {
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+.hidden {
+    display: none;
+}
